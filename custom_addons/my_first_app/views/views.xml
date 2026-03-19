@@ -1,0 +1,79 @@
+<odoo>
+    <record id="view_partner_form_inherit_eeli" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="eeli_project_no"/>
+                <field name="service_job_no"/>
+                <field name="job_name"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_eel_elevator_form" model="ir.ui.view">
+        <field name="name">eel.elevator.form</field>
+        <field name="model">eel.elevator</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="contract_status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Device ID (e.g. L-1234)"/></h1>
+                    </div>
+                    <group>
+                        <group string="Basic Info">
+                            <field name="owner_id"/>
+                            <field name="tssa_license"/>
+                            <field name="serial_no"/>
+                            <field name="service_route"/>
+                        </group>
+                        <group string="Technical Details">
+                            <field name="device_type"/>
+                            <field name="make"/>
+                            <field name="model_ref"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Dates &amp; Compliance">
+                            <group>
+                                <field name="handover_date"/>
+                                <field name="contract_start"/>
+                                <field name="contract_end"/>
+                                <field name="cat1_date"/>
+                                <field name="cat5_date"/>
+                            </group>
+                        </page>
+                        <page string="Pricing &amp; Contract">
+                            <group>
+                                <group string="Service Fees">
+                                    <field name="annual_price"/>
+                                    <field name="price_per_visit"/>
+                                    <field name="visits_count"/>
+                                </group>
+                                <group string="Other Charges">
+                                    <field name="annual_phone_line"/>
+                                    <field name="annual_camera_monitoring"/>
+                                    <field name="cat1_charge"/>
+                                    <field name="cat5_charge"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_eel_elevator" model="ir.actions.act_window">
+        <field name="name">Elevator Registry</field>
+        <field name="res_model">eel.elevator</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_eel_root" name="EEL Operations" sequence="10"/>
+    <menuitem id="menu_eel_customers" name="Customers" parent="menu_eel_root" action="base.action_partner_form"/>
+    <menuitem id="menu_eel_elevator" name="Elevator Registry" parent="menu_eel_root" action="action_eel_elevator"/>
+</odoo>
